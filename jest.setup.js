@@ -3,6 +3,8 @@
  * Configures testing environment and global mocks
  */
 
+import '@testing-library/jest-dom';
+
 // Mock next/router
 jest.mock('next/router', () => ({
   useRouter: () => ({
@@ -20,10 +22,12 @@ const localStorageMock = {
   removeItem: jest.fn(),
   clear: jest.fn(),
 };
-global.localStorage = localStorageMock as any;
+
+Object.defineProperty(window, 'localStorage', {
+  value: localStorageMock,
+});
 
 // Suppress console errors during tests (optional)
-// You can comment this out if you want to see all console messages
 const originalError = console.error;
 beforeAll(() => {
   console.error = (...args: any[]) => {
