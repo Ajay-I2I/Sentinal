@@ -36,12 +36,21 @@ const customJestConfig = {
     },
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  globals: {
-    'ts-jest': {
-      tsconfig: {
-        jsx: 'react-jsx',
+  transform: {
+    '^.+\\.(ts|tsx)$': ['@swc/jest', {
+      jsc: {
+        parser: {
+          syntax: 'typescript',
+          decorators: true,
+          dynamicImport: true,
+        },
+        transform: {
+          react: {
+            runtime: 'automatic',
+          },
+        },
       },
-    },
+    }],
   },
 };
 
